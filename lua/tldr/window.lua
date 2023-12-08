@@ -1,7 +1,7 @@
 local M = {}
 
 local function win_nmap(buf, lhs, rhs)
-    vim.api.nvim_buf_set_keymap(buf, "n", lhs, rhs, {noremap = true, silent = true})
+    vim.api.nvim_buf_set_keymap(buf, "n", lhs, rhs, { noremap = true, silent = true })
 end
 
 -- Create a new floating window.
@@ -26,8 +26,8 @@ function M.new()
 
     local win = vim.api.nvim_open_win(buf, true, wincfg)
 
-    win_nmap(buf, "q", "<cmd>lua vim.api.nvim_win_close(".. win ..", true)<cr>")
-    win_nmap(buf, "<Esc>", "<cmd>lua vim.api.nvim_win_close(".. win ..", true)<cr>")
+    win_nmap(buf, "q", "<cmd>lua vim.api.nvim_win_close(" .. win .. ", true)<cr>")
+    win_nmap(buf, "<Esc>", "<cmd>lua vim.api.nvim_win_close(" .. win .. ", true)<cr>")
 
     return buf
 end

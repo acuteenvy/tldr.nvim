@@ -1,0 +1,26 @@
+name: CI
+on:
+  push:
+    branches: main
+    paths:
+      - "lua/"
+      - "stylua.toml"
+  pull_request:
+    paths:
+      - "lua/"
+      - "stylua.toml"
+
+jobs:
+  StyLua:
+    name: "Format using StyLua"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run stylua
+        uses: JohnnyMorganz/stylua-action@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          args: --check lua/
+          version: 0.19.1
