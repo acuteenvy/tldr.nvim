@@ -3,16 +3,25 @@ local window = require("tldr.window")
 
 local M = {}
 
+local function err(msg)
+    vim.notify("error: " .. msg, vim.log.levels.ERROR)
+end
+
 -- Render the current file using a tldr client and show the output in a floating window.
 function M.render()
+    local page_path = vim.api.nvim_buf_get_name(0)
+    if page_path == "" then
+        err("unnamed buffer!")
+        return
+    end
+
     if vim.fn.executable("tldr") == 0 then
-        vim.notify("error: tldr not on $PATH. Please install a tldr client!", vim.log.levels.ERROR)
+        err("tldr not on $PATH. Please install a tldr client!")
         return
     end
 
     local client = vim.fn.exepath("tldr")
     local client_args = config.current.client_args
-    local page_path = vim.api.nvim_buf_get_name(0)
 
     -- Line endings have to be changed: https://github.com/neovim/neovim/issues/14557
     local page = vim.fn.system(client .. " " .. client_args .. " " .. page_path):gsub("\n", "\r\n")
