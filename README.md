@@ -6,6 +6,8 @@
 
 Preview [tldr pages](https://github.com/tldr-pages/tldr) using a client directly in Neovim.
 
+![screenshot](https://github.com/acuteenvy/tldr.nvim/assets/126529524/2a0e9a35-cb99-4572-aed1-70b057cdfc6a)
+
 ## Installation
 
 > [!NOTE]
