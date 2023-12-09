@@ -9,18 +9,41 @@ Preview [tldr pages](https://github.com/tldr-pages/tldr) using a client directly
 ## Installation
 
 > [!NOTE]
-> tldr.nvim requires a tldr client that implements the [tldr client specification](https://github.com/tldr-pages/tldr/blob/main/CLIENT-SPECIFICATION.md) on your `$PATH`.
+> tldr.nvim requires a tldr client on your `$PATH`.
 
-[lazy.nvim](https://github.com/folke/lazy.nvim)
+### [lazy.nvim](https://github.com/folke/lazy.nvim)
+
 ```lua
 {
     "acuteenvy/tldr.nvim",
+    cmd = "Tldr",
     config = function()
         require("tldr").setup()
     end
 }
 ```
 
+## Configuration
+
+`setup()` accepts some options. This is the default configuration:
+
+```lua
+require("tldr").setup({
+    -- Arguments passed to the tldr client to render a page.
+    -- tldr.nvim adds the path to the page after these arguments.
+    client_args = "--color always --render",
+    window = {
+        -- Dimensions of the tldr window. Can be either a fixed value (an integer greater than 1)
+        -- or a percentage of the screen height/width (a float from 0 to 1).
+        height = 0.8,
+        width = 0.8,
+        -- The border of the tldr window. Accepts the same values as nvim_open_win().
+        -- https://neovim.io/doc/user/api.html#nvim_open_win()
+        border = "single",
+    },
+})
+```
+
 ## Usage
 
-Running `:Tldr` opens a floating window with the output of `tldr --color always --render` on the current file. Press `q` or `Esc` to close it.
+Running `:Tldr` opens a floating window with the output of `tldr <configured_args> <path/to/current/file>`. Press `q` or `Esc` to close it.
