@@ -33,9 +33,9 @@ function M.new()
     config.override_tbl(overrides)
 
     local buf = vim.api.nvim_create_buf(false, true)
-    vim.api.nvim_buf_set_option(buf, "filetype", "tldr")
-    vim.api.nvim_buf_set_option(buf, "buftype", "nofile")
-    vim.api.nvim_buf_set_option(buf, "bufhidden", "wipe")
+    vim.api.nvim_set_option_value("filetype", "tldr", { buf = buf })
+    vim.api.nvim_set_option_value("buftype", "nofile", { buf = buf })
+    vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = buf })
 
     local win = vim.api.nvim_open_win(buf, true, config.current.window)
 
