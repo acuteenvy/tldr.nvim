@@ -23,8 +23,7 @@ function M.render()
     local client = vim.fn.exepath("tldr")
     local client_args = config.current.client_args
 
-    -- Line endings have to be changed: https://github.com/neovim/neovim/issues/14557
-    local page = vim.fn.system(client .. " " .. client_args .. " " .. page_path):gsub("\n", "\r\n")
+    local page = vim.fn.system(client .. " " .. client_args .. " " .. page_path)
 
     local buf = window.new()
     local term = vim.api.nvim_open_term(buf, {})
