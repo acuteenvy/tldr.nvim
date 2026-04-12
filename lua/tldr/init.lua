@@ -16,7 +16,7 @@ M.conf = {
 }
 
 local function err(msg)
-    vim.notify("error: " .. msg, vim.log.levels.ERROR)
+    vim.notify("(tldr.nvim) error: " .. msg, vim.log.levels.ERROR)
 end
 
 local function win_nmap(buf, lhs, rhs)
