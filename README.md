@@ -46,9 +46,11 @@ require("tldr").setup({
         -- or a percentage of the screen height/width (a float from 0 to 1).
         height = 0.8,
         width = 0.8,
-        -- The border of the tldr window. Accepts the same values as nvim_open_win().
+
+        -- You can put window config options accepted by nvim_open_win() here.
         -- https://neovim.io/doc/user/api.html#nvim_open_win()
-        border = "single",
+        -- example:
+        -- title = "tldr page preview",
     },
 })
 ```
