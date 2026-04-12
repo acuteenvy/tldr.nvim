@@ -15,12 +15,6 @@ M.conf = {
     },
 }
 
-local function conf_override(opts)
-    if opts then
-        M.conf = vim.tbl_deep_extend("force", M.conf, opts)
-    end
-end
-
 local function err(msg)
     vim.notify("error: " .. msg, vim.log.levels.ERROR)
 end
@@ -31,36 +25,31 @@ end
 
 -- Create a new floating window.
 local function new_win()
-    local overrides = {
-        window = {
-            relative = "editor",
-            style = "minimal",
-        },
-    }
+    local winconf = M.conf.window
+    winconf.relative = "editor"
+    winconf.style = "minimal"
 
-    if M.conf.window.height <= 1 then
+    if winconf.height <= 1 then
         local editor_height = vim.api.nvim_win_get_height(0)
-        M.conf.window.height = math.floor(editor_height * M.conf.window.height)
+        winconf.height = math.floor(editor_height * winconf.height)
     end
 
-    if M.conf.window.width <= 1 then
+    if winconf.width <= 1 then
         local editor_width = vim.api.nvim_win_get_width(0)
-        M.conf.window.width = math.floor(editor_width * M.conf.window.width)
+        winconf.width = math.floor(editor_width * winconf.width)
     end
 
     -- Center the floating window.
     local ui = vim.api.nvim_list_uis()[1]
-    overrides.window.row = ui.height / 2 - M.conf.window.height / 2
-    overrides.window.col = ui.width / 2 - M.conf.window.width / 2
-
-    conf_override(overrides)
+    winconf.row = ui.height / 2 - winconf.height / 2
+    winconf.col = ui.width / 2 - winconf.width / 2
 
     local buf = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_set_option_value("filetype", "tldr", { buf = buf })
     vim.api.nvim_set_option_value("buftype", "nofile", { buf = buf })
     vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = buf })
 
-    local win = vim.api.nvim_open_win(buf, true, M.conf.window)
+    local win = vim.api.nvim_open_win(buf, true, winconf)
 
     win_nmap(buf, "q", "<cmd>lua vim.api.nvim_win_close(" .. win .. ", true)<cr>")
     win_nmap(buf, "<Esc>", "<cmd>lua vim.api.nvim_win_close(" .. win .. ", true)<cr>")
@@ -93,7 +82,9 @@ end
 
 function M.setup(opts)
     vim.api.nvim_create_user_command("Tldr", M.render_page, {})
-    conf_override(opts)
+    if opts then
+        M.conf = vim.tbl_deep_extend("force", M.conf, opts)
+    end
 end
 
 return M
