@@ -13,6 +13,13 @@ Preview [tldr pages](https://github.com/tldr-pages/tldr) using a client directly
 > [!NOTE]
 > tldr.nvim requires a tldr client on your `$PATH`.
 
+### vim.pack
+
+```lua
+vim.pack.add({ "https://github.com/acuteenvy/tldr.nvim" })
+require("tldr").setup()
+```
+
 ### [lazy.nvim](https://github.com/folke/lazy.nvim)
 
 ```lua
