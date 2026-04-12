@@ -52,7 +52,12 @@ local function new_win()
 
     win_nmap(buf, "q", "<cmd>q<cr>")
     win_nmap(buf, "<Esc>", "<cmd>q<cr>")
-    vim.api.nvim_create_autocmd("TermEnter", { buffer = buf, callback = vim.cmd.stopinsert })
+    vim.api.nvim_create_autocmd("TermEnter", {
+        buffer = buf,
+        callback = function()
+            vim.cmd.stopinsert()
+        end,
+    })
 
     return buf
 end
