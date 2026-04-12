@@ -48,10 +48,11 @@ local function new_win()
     vim.api.nvim_set_option_value("buftype", "nofile", { buf = buf })
     vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = buf })
 
-    local win = vim.api.nvim_open_win(buf, true, winconf)
+    vim.api.nvim_open_win(buf, true, winconf)
 
-    win_nmap(buf, "q", "<cmd>lua vim.api.nvim_win_close(" .. win .. ", true)<cr>")
-    win_nmap(buf, "<Esc>", "<cmd>lua vim.api.nvim_win_close(" .. win .. ", true)<cr>")
+    win_nmap(buf, "q", "<cmd>q<cr>")
+    win_nmap(buf, "<Esc>", "<cmd>q<cr>")
+    vim.api.nvim_create_autocmd("TermEnter", { buffer = buf, callback = vim.cmd.stopinsert })
 
     return buf
 end
