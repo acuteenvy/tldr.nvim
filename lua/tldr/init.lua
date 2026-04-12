@@ -24,7 +24,8 @@ end
 
 -- Create a new floating window.
 local function new_win()
-    local winconf = M.conf.window
+    local winconf = {}
+    winconf = vim.tbl_deep_extend("force", winconf, M.conf.window)
     winconf.relative = "editor"
     winconf.style = "minimal"
 
